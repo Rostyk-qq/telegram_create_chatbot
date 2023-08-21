@@ -1,0 +1,122 @@
+тобто почнемо з ботом 1 на 1
+точніше відправкою даних
+
+ми маємо
+botToken
+і chatid в бесідах він з -
+
+шоб бот працював в бесіді потрібно бота зробити адміном
+
+отримати дані про чат ми можемо за допосогою
+
+"https://api.telegram.org/bot botToken /getUpdates";
+і ми отримаємо json з даними
+шоб обробити в масив і получити дані ми можемо використати
+
+якшо в
+json_decode(json, i true якшо асоціативний) переводить з json
+json_encode в json
+
+urlencode() - переводить в url
+urldecode - з url
+
+відправка в чат повідомлення і отримання того шо в кажемо
+бо керуємо "https://api.telegram.org/bot botToken /getUpdates";
+
+використання curl
+
+$message = 'Hello';
+
+$arrayHttp = array(
+    "chat_id" => chat_id,
+    "text" => $message,
+    "parse_mode" => 'html'
+)
+відправка тесту
+примітка ми можемо в message які відправляємо викорситовувати html
+$ch = curl_init("https://api.telegram.org/bot" . botToken . "/sendMessage?" . http_build_query($arrayHttp));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_HEADER, false);
+
+$resltQuery = curl_exec($ch);
+
+curl_close($ch);
+
+тобто послідовність дій
+спочатку потрібно створити самого бота через BotFather
+взяти api і chat_id для початку потім ми бедемо отримувати його динамічно але пізніше ми його візьмемо чеез api.telegram.org
+
+потім ми створюємо проект в htdocs і в консолі цього проекта через
+php -S localhost:3000 запускаємо це для ngrok
+
+ngrok ми використовуємо коли хочемо зробити https і взаємодіяти з такими протоколами
+також ngrok дає змогу слідкувати за сервером і отримувати зміни не оновляючи його
+
+для того шоб запуститит його
+після встановення потрібно зробити extract to за допомогою WinWar і зробити папку з вмістом ngrok.exe
+
+нам потрібно в консолі cd до цієї папки потім коли доберемся
+ngrok.exe http і вот для чого ми робили  php -S localhost:3000 вказуємо 3000
+
+далі нам дається 1 https вроді такого https://dfa1-176-106-203-53.ngrok-free.app
+і http://127.0.0.1:4040 він ьуде стежити за змінами
+
+
+ми можемо отримувати зміни прописавши
+https://api.telegram.org/bot6526409569:AAFu2wyjRQ8dbr2__oloGUAbISGY_IXhoIE/getUpdate   botApi - 6526409569:AAFu2wyjRQ8dbr2__oloGUAbISGY_IXhoIE
+але цей спосіб не дієвий так як ми шоб отримати зміни мусимо оновляти сервер і при оновлені виведеться результат
+його ліпше використовувати спочатку для отримання даних і перевірити бота
+
+далі нам в нас є https://dfa1-176-106-203-53.ngrok-free.app для чого нам дає це ngrok
+
+нам потрібно дати Webhook тобто це те за допомогою якого ми будумо отримувати дані при написанні чогось в тг
+і зміни будуть миттєві
+
+додавання WebHooks
+https://api.telegram.org/bot6526409569:AAFu2wyjRQ8dbr2__oloGUAbISGY_IXhoIE/setWebhook?url=https://dfa1-176-106-203-53.ngrok-free.app
+
+видалення якшо сталися зміни WebHooks а потім знов встановлення
+https://api.telegram.org/bot6526409569:AAFu2wyjRQ8dbr2__oloGUAbISGY_IXhoIE/deleteWebhook
+
+ПРИМІТКА коли в нас є засетаний WebHook то getUpdate працювати не буде
+
+ділі отримання даних про вебхук встановлений
+https://api.telegram.org/bot6526409569:AAFu2wyjRQ8dbr2__oloGUAbISGY_IXhoIE/getWebhookInfo тобто ми дивимся чи є встановлений WebHook
+
+і відправка повідомлення
+https://api.telegram.org/bot6526409569:AAFu2wyjRQ8dbr2__oloGUAbISGY_IXhoIE/sendMessage?chat_id&text = текст
+
+
+і коли ми починаємо обробку в php
+ми можемо отримувати дані і використовувати
+
+$update = file_get_contents('php://input');
+$update = json_decode($update, true);
+
+і ліпше використовувати chat_id бо коли чат то значення буде -
+і ми зможемо отриділяти
+
+
+передавання даних між серверами використання curl
+
+$ch = curl_init("http://localhost//... .php");
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(переводими асоціативний масив));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, - бо посилаємо на http сервер , true);
+curl_exec($ch);
+curl_close($ch);
+
+
+а для посилання тексту в telegram
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); ааа сертифікат Access-Control-Allow
+curl_setopt($ch, CURLOPT_HEADER, false);
+
+
+створення Trello
+отримання Trello app-key
+
+https://trello.com/app-key
+
+
